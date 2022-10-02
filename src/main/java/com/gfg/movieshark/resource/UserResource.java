@@ -1,5 +1,6 @@
 package com.gfg.movieshark.resource;
 
+import com.gfg.movieshark.enums.Role;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -19,8 +20,17 @@ public class UserResource {
 	@NotBlank(message = "User name is Mandatory")
 	private String name;
 
+	@NotBlank(message = "password is Mandatory")
+	private String password;
+
+
+	private Role role;
+
 	@NotBlank(message = "Mobile is Mandatory")
 	private String mobile;
+
+	@NotBlank(message = "Email is Mandatory")
+	private String email;
 
 	private List<TicketResource> tickets;
 }

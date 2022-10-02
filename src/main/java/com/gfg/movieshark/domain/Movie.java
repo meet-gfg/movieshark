@@ -23,7 +23,7 @@ public class Movie {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "name", nullable = false)
+	@Column(nullable = false)
 	private String title;
 
 	@Enumerated(EnumType.STRING)
@@ -54,6 +54,7 @@ public class Movie {
 				.id(movie.getId())
 				.title(movie.getTitle())
 				.genre(movie.getGenre())
+				.reviews(Review.toResource(movie.getReviews()))
 				.build();
 	}
 }

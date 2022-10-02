@@ -1,15 +1,18 @@
 package com.gfg.movieshark.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gfg.movieshark.resource.ShowResource;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,18 +32,16 @@ public class Show {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(name = "show_date", columnDefinition = "DATE", nullable = false)
-	private LocalDate showDate;
 
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
 	@Column(name = "show_time", columnDefinition = "TIME", nullable = false)
-	private LocalTime showTime;
+	private LocalDateTime showTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	@Column(name = "created_at")
 	private Date createdAt;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	@Column(name = "updated_at")
 	private Date updatedAt;
@@ -75,10 +76,9 @@ public class Show {
 
 		return ShowResource.builder()
 				.id(show.getId())
-				.showDate(show.getShowDate())
 				.showTime(show.getShowTime())
-				.movie(Movie.toResource(show.getMovie()))
-				.theatre(Theater.toResource(show.getTheater()))
+				.movieId(show.getMovie().getId())
+				.theaterId(show.getTheater().getId())
 				.seats(ShowSeat.toResource(show.getSeats()))
 				.createdAt(show.getCreatedAt())
 				.updatedAt(show.getUpdatedAt())
@@ -86,11 +86,10 @@ public class Show {
 
 	}
 
-	public static Show toEntity(ShowResource showDto) {
+	public static Show toEntity(ShowResource showResource) {
 
 		return Show.builder()
-				.showDate(showDto.getShowDate())
-				.showTime(showDto.getShowTime())
+				.showTime(showResource.getShowTime())
 				.build();
 
 	}

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @NoArgsConstructor
 @Builder
@@ -19,5 +21,7 @@ public class MovieResource {
 	private String title;
 
 	private Genre genre;
+
+	private List<ReviewResource> reviews;
 
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -19,20 +20,17 @@ public class ShowResource {
 
 	private long id;
 
-	@NotNull(message = "Show Date is Mandatory")
-	private LocalDate showDate;
-
 	@NotNull(message = "Show Time is Mandatory")
-	private LocalTime showTime;
+	private LocalDateTime showTime;
 
 	@Min(value = 1, message = "Show Rate Multiplier Cannot be less than 1")
 	private float rateMultiplier;
 
 	@NotNull(message = "Movie is Mandatory for Show")
-	private MovieResource movie;
+	private long movieId;
 
 	@NotNull(message = "Theater is Mandatory for Show")
-	private TheaterResource theatre;
+	private long theaterId;
 
 	private Date createdAt;
 

@@ -1,12 +1,17 @@
 package com.gfg.movieshark.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gfg.movieshark.resource.ReviewResource;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -38,5 +43,21 @@ public class Review {
 
     @UpdateTimestamp
     private Date updatedDate;
+
+
+    public static Review toEntity(ReviewResource reviewResource){
+        return Review.builder().movieReview(reviewResource.getMovieReview()).rating(reviewResource.getRating()).movie(Movie.builder().id(reviewResource.getMovieId()).build()).build();
+    }
+
+    public static ReviewResource toResource(Review review){
+        return ReviewResource.builder().movieReview(review.getMovieReview()).rating(review.getRating()).movieId(review.getMovie().getId()).build();
+    }
+
+    public static List<ReviewResource> toResource(List<Review> reviews){
+             if(CollectionUtils.isEmpty(reviews))
+                 return new ArrayList<>();
+             else
+                 return reviews.stream().map(Review::toResource).collect(Collectors.toList()); 
+    }
 
 }
