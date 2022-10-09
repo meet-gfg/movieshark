@@ -15,18 +15,18 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @ToString
-public class BookTicketResource {
+public class BookingResource {
 
-	@NotEmpty(message = "Select atleast 1 Seat to Book")
+	@NotEmpty(message = "SeatNumbers cannot be empty")
 	private Set<String> seatsNumbers;
 
-	@Min(value = 1, message = "User is Invalid")
+	@Min(value = 1, message = "Invalid user ID")
 	private long userId;
 
-	@Min(value = 1, message = "Show is Invalid")
+	@Min(value = 1, message = "Invalid show ID")
 	private long showId;
 
-	@NotNull(message = "Seat Type is Mandatory to Book")
+	@NotNull(message = "seatType cannot be null")
 	private SeatType seatType;
 
 }

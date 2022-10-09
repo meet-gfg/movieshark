@@ -1,0 +1,102 @@
+Project 2
+
+MovieShark --> Movie ticket booking system
+
+
+Requirements:
+    a.	Search a movie by title
+    b.	Rate and add review for a movie
+    c.	Search a top 5 movie by genre
+    d.  Search shows running in a city
+    e.  book ticket for the show
+    d.  send notification to user for the booked tickets.
+
+
+Entity:
+    Movie:{
+        --Must to have
+        Id,
+        title,
+        genre,
+        rating,
+        <reviews>
+        <shows>
+       -- Good to have
+        Release date
+        Length
+       -- Nice to have
+        Cast
+        }
+    Review: {
+       -- Must to have
+        Id,
+        movieTitle,
+        rating,
+        review
+      --  Good to have
+        Userid,
+        createdAt,
+        }
+
+        Theater:{
+        Id,
+        name,
+        seats,
+        city,
+        address,
+        }
+
+        TheaterSeat:{
+        Id,
+        number,
+        type
+        }
+
+        Show:{
+        id,
+        movie,
+        theater,
+        time,
+        tickets,
+        seats
+
+        }
+        showSeat{
+        Id,
+        type,
+        price,
+        show,
+        --IMP isBooked
+        }
+
+
+Entity relation:
+One movie can contain many reviews  -> One to many relationship.
+One Theater contains many seats  -> One to many relationship.
+One Movie contains many shows -> One to many
+One Show contains many seats -> One to many
+One User contains many bookings -> One to many
+
+
+
+APIs:
+        addMovie ->POST
+        updateMovie -> PUT
+        deleteMovie -> DELETE
+        addTheater -> POST
+        addTheaterSeat -> POST // optional for later
+        addUser -> POST
+        addShow -> POST
+        SearchByTitle -> GET
+        AddReview -> POST
+        SearchByGenre -> GET
+        SearchByCity -> GET
+        SearchByShow -> GET
+        searchUser ->GET
+
+
+
+
+
+APIs:
+#Postman collection added in the root folder, import to use all apis.

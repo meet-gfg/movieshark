@@ -1,6 +1,5 @@
 package com.gfg.movieshark.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gfg.movieshark.domain.Show;
 import com.gfg.movieshark.domain.ShowSeat;
@@ -10,7 +9,7 @@ import com.gfg.movieshark.exception.NotFoundException;
 import com.gfg.movieshark.repository.ShowRepository;
 import com.gfg.movieshark.repository.TicketRepository;
 import com.gfg.movieshark.repository.UserRepository;
-import com.gfg.movieshark.resource.BookTicketResource;
+import com.gfg.movieshark.resource.BookingResource;
 import com.gfg.movieshark.resource.TicketMessage;
 import com.gfg.movieshark.resource.TicketResource;
 import lombok.extern.slf4j.Slf4j;
@@ -43,28 +42,28 @@ public class TicketService {
 
 	ObjectMapper mapper=new ObjectMapper();
 
-	public TicketResource bookTicket(BookTicketResource bookTicketResource) {
+	public TicketResource bookTicket(BookingResource bookingResource) {
 
-		Optional<User> optionalUser = userRepository.findById(bookTicketResource.getUserId());
+		Optional<User> optionalUser = userRepository.findById(bookingResource.getUserId());
 
 		if (optionalUser.isEmpty()) {
-			throw new NotFoundException("User Not Found with ID: " + bookTicketResource.getUserId() + " to book ticket");
+			throw new NotFoundException("User Not Found with ID: " + bookingResource.getUserId() + " to book ticket");
 		}
 
-		Optional<Show> optionalShow = showRepository.findById(bookTicketResource.getShowId());
+		Optional<Show> optionalShow = showRepository.findById(bookingResource.getShowId());
 
 		if (optionalShow.isEmpty()) {
-			throw new NotFoundException("Show Not Found with ID: " + bookTicketResource.getUserId() + " to book ticket");
+			throw new NotFoundException("Show Not Found with ID: " + bookingResource.getUserId() + " to book ticket");
 		}
 
-		Set<String> requestedSeats = bookTicketResource.getSeatsNumbers();
+		Set<String> requestedSeats = bookingResource.getSeatsNumbers();
 
 		List<ShowSeat> showSeatsEntities = optionalShow.get().getSeats();
 
 		showSeatsEntities =
 				showSeatsEntities
 						.stream()
-						.filter(seat -> seat.getSeatType().equals(bookTicketResource.getSeatType())
+						.filter(seat -> seat.getSeatType().equals(bookingResource.getSeatType())
 								&& !seat.isBooked()
 								&& requestedSeats.contains(seat.getSeatNumber()))
 						.collect(Collectors.toList());
