@@ -82,9 +82,7 @@ public class SecurityConfiguration {
         httpSecurity
                 .csrf().disable() //***csrf needs to be disabled if directly hitting POST api from unknown sources
                 .authorizeRequests()
-//                .antMatchers("/movie/add").hasAuthority(ADMIN_AUTH)
-//                .antMatchers("/user/add").permitAll()
-//                .antMatchers("/**").hasAnyAuthority(ADMIN_AUTH,USER_AUTH);
+                //.antMatchers("/movie/add").hasAuthority(ADMIN_AUTH)
                 .antMatchers("/**").permitAll();
         return httpSecurity.build();
     }

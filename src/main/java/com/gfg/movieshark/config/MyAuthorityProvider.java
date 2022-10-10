@@ -3,6 +3,7 @@ package com.gfg.movieshark.config;
 
 import com.gfg.movieshark.domain.User;
 import com.gfg.movieshark.service.UserAuthService;
+import org.apache.kafka.common.security.oauthbearer.secured.BasicOAuthBearerToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -41,6 +42,6 @@ public class MyAuthorityProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
        if(UsernamePasswordAuthenticationToken.class.equals(authentication))
             return true;
-            return false;
+       return false;
     }
 }

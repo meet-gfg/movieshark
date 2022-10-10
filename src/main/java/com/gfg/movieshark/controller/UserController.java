@@ -18,7 +18,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping("/add")
+	@PostMapping("/signup")
 	public ResponseEntity<UserResource> addUser(@RequestBody UserResource userResource) {
 		return ResponseEntity.ok(userService.addUser(userResource));
 	}
@@ -27,4 +27,5 @@ public class UserController {
 	public ResponseEntity<UserResource> getUser(@PathVariable(name = "id") @Min(value = 1, message = "User Id Cannot be -ve") long id) {
 		return ResponseEntity.ok(userService.getUser(id));
 	}
+
 }

@@ -63,6 +63,7 @@ public class User implements UserDetails {
 				.name(user.getName())
 				.mobile(user.getMobile())
 				.email(user.getEmail())
+				.tickets(Ticket.toResource(user.getTicketEntities()))
 				.build();
 	}
 

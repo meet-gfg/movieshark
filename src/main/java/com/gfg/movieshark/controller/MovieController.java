@@ -3,6 +3,7 @@ package com.gfg.movieshark.controller;
 import com.gfg.movieshark.resource.MovieResource;
 import com.gfg.movieshark.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,8 @@ public class MovieController {
 	@PostMapping("/add")
 	public ResponseEntity<MovieResource> addMovie(@RequestBody MovieResource movieRequest) {
 
-		return ResponseEntity.ok(movieService.addMovie(movieRequest));
+		//return ResponseEntity.ok(movieService.addMovie(movieRequest));
+		return new ResponseEntity<>(movieService.addMovie(movieRequest), HttpStatus.CREATED); // 201 CREATED;
 	}
 
 	@GetMapping("/{id}")

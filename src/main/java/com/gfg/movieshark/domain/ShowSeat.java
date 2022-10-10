@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gfg.movieshark.enums.SeatType;
 import com.gfg.movieshark.resource.ShowSeatsResource;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -41,6 +42,7 @@ public class ShowSeat {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "booked_at")
+	@CreationTimestamp
 	private Date bookedAt;
 
 	@ManyToOne

@@ -9,11 +9,14 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Data
@@ -35,7 +38,7 @@ public class Ticket {
 	@Column(name = "amount", nullable = false)
 	private double amount;
 
-	@CreatedDate
+
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "booked_at", nullable = false)
@@ -54,6 +57,12 @@ public class Ticket {
 	private List<ShowSeat> seats;
 
 
+	public static List<TicketResource> toResource(List<Ticket> tickets){
+		if(CollectionUtils.isEmpty(tickets))
+			return new ArrayList<>();
+		return tickets.stream().map(Ticket::toResource).collect(Collectors.toList());
+	}
+
 	public static Ticket toEntity(TicketResource ticketResource) {
 
 		return Ticket.builder()
@@ -69,7 +78,7 @@ public class Ticket {
 				.id(ticketEntity.getId())
 				.allottedSeats(ticketEntity.getAllottedSeats())
 				.amount(ticketEntity.getAmount())
-				.show(Show.toResource(ticketEntity.getShow()))
+				.bookedAt(ticketEntity.getBookedAt())
 				.build();
 	}
 

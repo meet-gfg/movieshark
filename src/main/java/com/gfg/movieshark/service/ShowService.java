@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,10 +93,19 @@ public class ShowService {
 	}
 
 
-	public List<ShowResource> searchShows(String movieName) {
+	public List<ShowResource> searchShows(String movieName,String cityName,String theaterName) {
 
-		List<Show> shows=showsRepository.findByMovieName(movieName);
-
+		if(!StringUtils.hasText(cityName))
+			new ArrayList<>();
+		List<Show> shows=new ArrayList<>();
+		if(StringUtils.hasText(movieName))
+			shows=showsRepository.findByMovieNameAndCity(movieName,cityName);
+		else if(StringUtils.hasText(theaterName)){
+			shows=showsRepository.findByTheaterAndCity(theaterName,cityName);
+		}
+		else{
+			shows=showsRepository.findByCity(cityName);
+		}
 		if(CollectionUtils.isEmpty(shows))
 			return new ArrayList<>();
 		else

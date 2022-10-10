@@ -2,11 +2,17 @@ package com.gfg.movieshark.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.gfg.movieshark.resource.ShowResource;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.util.CollectionUtils;
@@ -33,15 +39,17 @@ public class Show {
 
 
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@Column(name = "show_time", columnDefinition = "TIME", nullable = false)
 	private LocalDateTime showTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
+	@CreationTimestamp
 	@Column(name = "created_at")
 	private Date createdAt;
 
-	@LastModifiedDate
+	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Date updatedAt;
 

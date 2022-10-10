@@ -1,5 +1,10 @@
 package com.gfg.movieshark.resource;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -21,10 +26,10 @@ public class ShowResource {
 	private long id;
 
 	@NotNull(message = "Show Time is Mandatory")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime showTime;
-
-	@Min(value = 1, message = "Show Rate Multiplier Cannot be less than 1")
-	private float rateMultiplier;
 
 	@NotNull(message = "Movie is Mandatory for Show")
 	private long movieId;
